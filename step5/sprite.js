@@ -23,6 +23,7 @@ export class Sprite {
     }
     let closestPoint = this.getClosestPoint(hillPoints);
     this.y = closestPoint.y;
+    this.rotationAngle = closestPoint.rotation;
   }
 
   draw(ctx, hillPoints) {
@@ -37,6 +38,9 @@ export class Sprite {
   drawCar(ctx) {
 
     ctx.translate(this.x, this.y);
+    ctx.rotate(this.rotationAngle);
+
+
     ctx.fillStyle = 'red';
     ctx.fillRect(
       -(this.width / 2),
@@ -55,6 +59,8 @@ export class Sprite {
     ctx.arc(this.width/4, 0, this.height/3, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fill();
+
+    
     
   }
 
@@ -67,20 +73,6 @@ export class Sprite {
       }
     }
     return this.getClosestDetailPoint(hillPoints.length - 1);
-
-
-
-
-    // for (let i = 1; i < hillPoints.length; i++) {
-    //   if (this.x >= hillPoints[i].x1 && this.x <= hillPoints[i].x3) {
-    //     debugger;
-    //     return this.getClosestDetailPoint(hillPoints[i]);
-    //   }
-    //   return {
-    //     y: 0,
-    //     rotation: 0
-    //   };
-    // }
   }
 
   getClosestDetailPoint(hillPoint) {
@@ -110,7 +102,7 @@ export class Sprite {
     return point;
   }
 
-
+  // https://javascript.info/bezier-curve
   getQuadraticValue (p0, p1, p2, t) {
     return (1 - t) * (1 - t) * p0 + 2 * (1 - t) * t * p1 + t * t * p2;
   }
@@ -119,8 +111,24 @@ export class Sprite {
     return {
       x: this.getQuadraticValue(x1, x2, x3, t),
       y: this.getQuadraticValue(y1, y2, y3, t),
-      rotation: 0
+      rotation: this.quadraticBezierAngle(x1, y1, x2, y2, x3, y3, t)
     }
+  }
+
+
+  //https://stackoverflow.com/questions/12357200/angle-of-a-given-point-on-a-bezier-curve
+ 
+  // quadraticBezierAngle(u:Number, anchor1:Point, anchor2:Point, control:Point):Number {
+  //   var uc:Number = 1 - u;
+  //   var dx:Number = (uc * control.x + u * anchor2.x) - (uc * anchor1.x + u * control.x);
+  //   var dy:Number = (uc * control.y + u * anchor2.y) - (uc * anchor1.y + u * control.y);
+  //   return Math.atan2(dy, dx);
+  // }
+
+  quadraticBezierAngle(x1, y1, x2, y2, x3, y3, t) {
+    const dx = ((1 - t) * x2 + t * x3) - ((1 - t) * x1 + t * x2);
+    const dy = ((1 - t) * y2 + t * y3) - ((1 - t) * y1 + t * y2);
+    return Math.atan2(dy, dx);
   }
 }
 

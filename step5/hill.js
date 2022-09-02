@@ -46,7 +46,7 @@ export class Hill {
       cur.x += this.speed;
       const center = {
         x: (prev.x + cur.x ) / 2,
-        y: (prev.y + cur.y) /2
+        y: (prev.y + cur.y) / 2
       }
 
       ctx.quadraticCurveTo(prev.x, prev.y, center.x, center.y);
