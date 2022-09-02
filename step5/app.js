@@ -1,6 +1,6 @@
 import { Hill } from './hill.js';
 import { StarCollection } from './star.js';
-
+import { SpriteCollection } from './spriteCollection.js';
 
 /*
 Reference:
@@ -25,12 +25,13 @@ class App {
       new Hill('#0D261D', 1.4, 6)
     ];
     this.stars = new StarCollection(200);
+    this.sprites = new SpriteCollection();
 
     window.addEventListener('resize', this.resize.bind(this), false);
     this.resize();
 
     requestAnimationFrame(this.animate.bind(this));
-    //this.draw();
+    //this.draw(); //for test
   }
 
   resize() {
@@ -44,6 +45,7 @@ class App {
       this.hills[i].resize(this.width, this.height);
     }
     this.stars.resize(this.width, this.height);
+    this.sprites.resize(this.width, this.height);
   }
 
   draw() {
@@ -53,6 +55,8 @@ class App {
     for (let i = 0; i < this.hills?.length; i++) {
       this.hills[i].draw(this.ctx);
     }
+
+    this.sprites.draw(this.ctx);
   }
 
   animate(t) {
