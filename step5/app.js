@@ -52,11 +52,12 @@ class App {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.stars.draw(this.ctx);
     
+    let hillPoints;
     for (let i = 0; i < this.hills?.length; i++) {
-      this.hills[i].draw(this.ctx);
+      hillPoints = this.hills[i].draw(this.ctx);
     }
 
-    this.sprites.draw(this.ctx);
+    this.sprites.draw(this.ctx, hillPoints);
   }
 
   animate(t) {

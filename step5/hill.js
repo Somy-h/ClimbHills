@@ -24,6 +24,8 @@ export class Hill {
 
     let cur = this.points[0];
     let prev = cur;
+    let hillPoints = [];
+    let prevCenter = cur;
 
     cur.x += this.speed;
 
@@ -34,7 +36,7 @@ export class Hill {
         y: this.getRandomY()
       })
     } else if (cur.x > this.width + this.period) {
-      //this.points?.splice(-1);
+      this.points?.splice(-1);
     }
 
     ctx.moveTo(cur.x, cur.y);    
@@ -46,15 +48,28 @@ export class Hill {
         x: (prev.x + cur.x ) / 2,
         y: (prev.y + cur.y) /2
       }
+
       ctx.quadraticCurveTo(prev.x, prev.y, center.x, center.y);
+
+      // Saving Hill Points for Sprite moving on the hills
+      hillPoints.push ({
+        x1: prevCenter.x,
+        y1: prevCenter.y,
+        x2: prev.x,
+        y2: prev.y,
+        x3: center.x,
+        y3: center.y
+      });
       prev = cur;
+      prevCenter = center;      
     }
     ctx.lineTo(prev.x, prev.y);
     ctx.lineTo(this.width, this.height);
     ctx.lineTo(this.points[0].x, this.height);
     ctx.fill();
     
-
+    //debugger;
+    return hillPoints;
   }
   
   getRandomY() {
