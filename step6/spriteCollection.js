@@ -16,9 +16,9 @@ export class SpriteCollection {
     }    
   }
 
-  draw(ctx, hillPoints) {
+  draw(ctx, hillPoints, time) {
     for (let i = 0; i < this.sprites.length; i++) {
-      this.sprites[i].draw(ctx, hillPoints);
+      this.sprites[i].draw(ctx, hillPoints, time);
     }
   }
 }

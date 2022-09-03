@@ -79,5 +79,4 @@ class Star {
     ctx.translate(-this.x, -this.y);
     ctx.closePath();
   }
-
 }

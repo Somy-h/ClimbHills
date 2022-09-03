@@ -39,10 +39,15 @@ class Star {
     this.y = y;
     this.size = Star.getRandom(2, 8);
     this.color = `rgba(255, ${Star.getRandom(180, 255)}, 0, 0.7)`;
-    this.opacity = 1;
+    this.opacity = 0.8;
   }
 
   draw(ctx) {
+    this.opacity -= Math.random();
+    if (this.opacity <= 0.4) {
+      this.opacity = 0.8;
+    }
+
     this.drawStar(ctx);
   }
 
@@ -64,7 +69,7 @@ class Star {
     let h = this.size * Math.sin(72 * (Math.PI / 180));
 
     ctx.beginPath();
-    ctx.fillStyle = `rgba(255, ${Star.getRandom(200, 255)}, 0, 0.7)`;
+    ctx.fillStyle = `rgba(255, ${Star.getRandom(200, 255)}, 0, ${this.opacity})`;
     ctx.translate(this.x, this.y);
     for (let i = 0; i < 5; i++) {  
       this.drawTriangle(ctx, h, w);

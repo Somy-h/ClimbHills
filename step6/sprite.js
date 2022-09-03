@@ -1,5 +1,5 @@
 export class Sprite {
-  constructor(width, height, speed) {
+  constructor(width, height, speed = 1) {
     this.winWidth = document.body.clientWidth;
     // this.width = 100;
     // this.height = 50;
