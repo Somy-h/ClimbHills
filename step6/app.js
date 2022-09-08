@@ -3,6 +3,7 @@ import { StarCollection } from './star.js';
 import { SpriteCollection } from './spriteCollection.js';
 import { Car } from './car.js';
 import { Sheep } from './sheep.js';
+import { Moon } from './moon.js';
 
 /*
 Reference:
@@ -28,6 +29,9 @@ class App {
     ];
 
     this.stars = new StarCollection(200);
+
+    // Add Moon
+    this.moon = new Moon(200);
 
     // add sprites
     this.sprites = new SpriteCollection(); 
@@ -55,6 +59,7 @@ class App {
     for (let i = 0; i < this.hills.length; i++) {
       this.hills[i].resize(this.width, this.height);
     }
+    this.moon.resize(this.width, this.height);
     this.stars.resize(this.width, this.height);
     this.sprites.resize(this.width, this.height);
   }
@@ -62,12 +67,12 @@ class App {
   draw(time) {
     this.ctx.clearRect(0, 0, this.width, this.height);
     this.stars.draw(this.ctx);
-    
+    this.moon.draw(this.ctx, time);
+
     let hillPoints;
     for (let i = 0; i < this.hills?.length; i++) {
       hillPoints = this.hills[i].draw(this.ctx);
     }
-
     this.sprites.draw(this.ctx, hillPoints, time);
   }
 
